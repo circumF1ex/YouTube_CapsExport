@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# pytest
+.pytest_cache/
+
+# generated transcript output (runtime data from ytsubs runs)
+out/
+out_clean/
+*.part
+
+# local YouTube auth / cookies
+cookies.txt
+
+# editors / IDEs
+.vscode/
+.idea/
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
