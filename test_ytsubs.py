@@ -537,10 +537,10 @@ def test_identical_titles_produce_distinct_files(tmp_path):
 
 # --- I. CLI ----------------------------------------------------------------
 
-def test_cli_without_url_returns_fatal_code(capsys):
+def test_cli_without_url_quits_cleanly(monkeypatch):
+    monkeypatch.setattr("builtins.input", lambda *_: "")
     rc = main([], client_factory=lambda cookies: FakeClient({}))
-    assert rc == 1
-    assert "URL" in capsys.readouterr().err
+    assert rc == 0
 
 
 def test_cli_video_end_to_end_srt(tmp_path):

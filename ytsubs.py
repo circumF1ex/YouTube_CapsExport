@@ -927,9 +927,31 @@ def main(argv: Sequence[str] | None = None,
     args = build_parser().parse_args(argv)
     urls = [*args.channel, *args.playlist, *args.video]
     if not urls:
-        print("error: provide at least one URL via --channel/--playlist/--video",
-              file=sys.stderr)
-        return 1
+        # Interactive fallback, mirroring the ytsubs.bat UX: same menu, same
+        # prompts, then run the same pipeline.
+        print("=" * 44)
+        print("  ytsubs - YouTube transcript exporter")
+        print("=" * 44)
+        print()
+        print("Type a channel, playlist or video link:")
+        print("  https://www.youtube.com/@channel")
+        print("  https://www.youtube.com/playlist?list=LIST_ID")
+        print("  https://www.youtube.com/watch?v=VIDEO_ID")
+        print()
+        print("Tip: save this link into YT_SOURCE at the top of this file")
+        print("     and next time it starts right away.")
+        print()
+        url = input("Link (Enter to quit): ").strip()
+        if not url:
+            return 0
+        kind = (
+            "--playlist" if "list=" in url
+            else "--video" if ("watch?v=" in url or "youtu.be/" in url)
+            else "--channel"
+        )
+        fmt = input("Format [txt/json/srt/vtt] (Enter = txt): ").strip() or args.format
+        args = build_parser().parse_args([kind, url, "--format", fmt])
+        urls = [*args.channel, *args.playlist, *args.video]
     langs = [lang.strip() for lang in args.langs.split(",") if lang.strip()]
     factory = client_factory or _make_default_factory(
         args.min_interval, args.sleep_subtitles,

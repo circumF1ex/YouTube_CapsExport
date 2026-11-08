@@ -8,6 +8,11 @@ venv/
 # pytest
 .pytest_cache/
 
+# PyInstaller build artifacts
+build/
+dist/
+ytsubs.spec
+
 # generated transcript output (runtime data from ytsubs runs)
 out/
 out_clean/
