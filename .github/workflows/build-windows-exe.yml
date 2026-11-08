@@ -30,7 +30,7 @@ jobs:
         run: pip install pyinstaller
 
       - name: Build EXE
-        run: pyinstaller --onefile --name ytsubs ytsubs.py --noconfirm
+        run: pyinstaller --onefile --name ytsubs ytsubs.py --noconfirm --hidden-import yt_dlp
 
       - name: Upload to Release
         uses: softprops/action-gh-release@v2
