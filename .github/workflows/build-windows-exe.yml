@@ -21,16 +21,21 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
       - name: Install PyInstaller
         run: pip install pyinstaller
 
       - name: Build EXE
-        run: pyinstaller --onefile --name ytsubs ytsubs.py
+        run: pyinstaller --onefile --name ytsubs ytsubs.py --noconfirm
 
       - name: Upload to Release
         uses: softprops/action-gh-release@v2
         with:
           files: dist/ytsubs.exe
+          if-no-files-found: error
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
