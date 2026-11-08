@@ -1,4 +1,4 @@
-# ytsubs
+# Youtube Captions Export
 
 A command-line utility for exporting **YouTube text transcripts** (subtitles — manual and automatic) **without downloading the video itself**.
 
